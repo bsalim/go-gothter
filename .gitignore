@@ -1,0 +1,70 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go Build and Binary Files
+/bin/
+/build/
+/dist/
+/out/
+
+# Go Modules
+vendor/
+
+# Go Cache
+*.cache
+*.log
+*.tmp
+*.swp
+*.swo
+
+# IDEs and Editors
+# VSCode
+.vscode/
+# IntelliJ IDEA
+.idea/
+# GoLand
+*.iml
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment Variables
+.env
+
+# Configuration files
+*.yml
+*.yaml
+
+# Test Coverage Files
+*.cover
+*.cov
+
+# Others
+*.tgz
+*.gz
+*.zip
+*.tar
+*.tar.gz
+*.tar.bz2
+*.rar
+*.7z
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# Kubernetes
+kubeconfig
