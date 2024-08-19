@@ -1,0 +1,25 @@
+# Paths to log files
+log_files:
+  auth_log: "/var/log/auth.log"  # Path to the authentication log file
+  log_file: "/var/log/gothter.log"
+  # Coming soon -> nginx_log: "/var/log/nginx/access.log"  # Path to the Nginx access log file
+
+# Patterns to detect in log files
+patterns:
+  auth_fail: "Invalid user \\w+ from (\\d+\\.\\d+\\.\\d+\\.\\d+)" # Regex pattern to detect failed authentication attempts
+  # Nginx & Apache logs - coming soon
+
+# Email notification settings
+email:
+  enabled: true  # Enable or disable email notifications
+  smtp_server: "smtp.example.com"  # SMTP server address
+  smtp_port: 587  # SMTP server port
+  smtp_user: "your-email@example.com"  # SMTP user (email address)
+  smtp_password: "your-email-password"  # SMTP user password
+  recipient: "recipient@example.com"  # Email recipient
+  subject: "Suspicious Activity Detected"  # Email subject line
+
+
+# Block duration for IP addresses in hours
+block_duration:
+  hours: 1
