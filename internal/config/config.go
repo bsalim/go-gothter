@@ -10,6 +10,7 @@ import (
 type Config struct {
 	LogFiles struct {
 		AuthLog string `yaml:"auth_log"`
+		LogFile string `yaml:"log_file"`
 		// Coming soon: NginxLog string `yaml:"nginx_log"`
 	} `yaml:"log_files"`
 	Patterns struct {
