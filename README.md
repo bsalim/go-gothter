@@ -5,6 +5,8 @@
 **Gothter** is a modern, lightweight security monitoring tool designed to enhance the safety of your systems by scanning and analyzing log files for suspicious activities.
 Built with Go, Gothter provides robust and efficient log monitoring capabilities, integrating seamlessly with your existing infrastructure.
 
+![Gothter](docs/logo.png)
+
 ## Features
 - **Log Scanning:** Monitors system and application logs, for security threats, currently only checking against auth.log
 - **Notifications:** Sends real-time notifications via email or Slack when potential threats are detected.
@@ -41,11 +43,37 @@ To get started with Gothter, follow these steps:
    ```
 
 4. **Configure the application:**
+
 Edit the configs/default_config.yaml file to set paths to your log files, define patterns to detect, and configure notification settings.
 
+5. **Build the project and run it**
+  ```bash
+   go build -o gothter ./cmd/main.go
+   
+   # Run using sudo since auth.log is a system file log
+   sudo ./gothter
+   ```
 
-5. **Monitor log:**
+6. **Monitor log:**
 Gothter will start monitoring your logs according to the configuration and send notifications when suspicious activity is detected.
+
+```bash
+# Check Gothther logs and activities
+sudo tail -f /var/log/gothter.log
+```
+
+
+7. **Check Blocked IPs:**
+You can checked number of IPs blocked by issuing following command:
+
+```bash
+# Check Gothther logs and activities
+sudo iptables -L INPUT -v -n
+```
+
+![Blocked IPs](docs/Screenshot-BlockIP.png)
+
+
 
 
 ## License
