@@ -2,13 +2,15 @@ package config
 
 import (
 	"fmt"
+	"os"
+
 	"gopkg.in/yaml.v3"
 )
 
 type Config struct {
 	LogFiles struct {
-		AuthLog  string `yaml:"auth_log"`
-		NginxLog string `yaml:"nginx_log"`
+		AuthLog string `yaml:"auth_log"`
+		// Coming soon: NginxLog string `yaml:"nginx_log"`
 	} `yaml:"log_files"`
 	Patterns struct {
 		AuthFail string `yaml:"auth_fail"`
@@ -17,7 +19,7 @@ type Config struct {
 	Email struct {
 		Enabled      bool   `yaml:"enabled"`
 		SMTPServer   string `yaml:"smtp_server"`
-		SMTPPort     int    `yaml:"smtp_port"`W
+		SMTPPort     int    `yaml:"smtp_port"`
 		SMTPUser     string `yaml:"smtp_user"`
 		SMTPPassword string `yaml:"smtp_password"`
 		Recipient    string `yaml:"recipient"`
@@ -30,10 +32,13 @@ type Config struct {
 	// 	Channel    string `yaml:"channel"`
 	// 	Username   string `yaml:"username"`
 	// } `yaml:"slack"`
+	BlockDuration struct {
+		Hours int `yaml:"hours"`
+	} `yaml:"block_duration"`
 }
 
 func LoadConfig(filename string) (*Config, error) {
-	file, err := ioutil.ReadFile(filename)
+	file, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, fmt.Errorf("error reading config file: %w", err)
 	}

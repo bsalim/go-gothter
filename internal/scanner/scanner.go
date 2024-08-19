@@ -2,34 +2,38 @@ package scanner
 
 import (
 	"go-gothter/internal/config"
-	"log"
 
 	"github.com/fsnotify/fsnotify"
+	"github.com/sirupsen/logrus"
 )
 
 type LogScanner struct {
-	cfg *config.Config
+	cfg    *config.Config
+	logger *logrus.Logger
 }
 
-func NewLogScanner(cfg *config.Config) *LogScanner {
-	return &LogScanner{cfg: cfg}
+func NewLogScanner(cfg *config.Config, logger *logrus.Logger) *LogScanner {
+	return &LogScanner{
+		cfg:    cfg,
+		logger: logger,
+	}
 }
 
 func (s *LogScanner) StartMonitoring() {
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
-		log.Fatalf("Error creating watcher: %v", err)
+		s.logger.Fatalf("Error creating watcher: %v", err)
 	}
 	defer watcher.Close()
 
 	err = watcher.Add(s.cfg.LogFiles.AuthLog)
 	if err != nil {
-		log.Fatalf("Error adding file to watcher: %v", err)
+		s.logger.Fatalf("Error adding file to watcher: %v", err)
 	}
-	err = watcher.Add(s.cfg.LogFiles.NginxLog)
-	if err != nil {
-		log.Fatalf("Error adding file to watcher: %v", err)
-	}
+	// err = watcher.Add(s.cfg.LogFiles.NginxLog)
+	// if err != nil {
+	// 	s.logger.Fatalf("Error adding file to watcher: %v", err)
+	// }
 
 	for {
 		select {
@@ -38,12 +42,12 @@ func (s *LogScanner) StartMonitoring() {
 				return
 			}
 			// Handle log file events here
-			log.Println("Log event detected:", event)
+			s.logger.Infof("Log event detected: %v", event)
 		case err, ok := <-watcher.Errors:
 			if !ok {
 				return
 			}
-			log.Println("Error:", err)
+			s.logger.Errorf("Error: %v", err)
 		}
 	}
 }

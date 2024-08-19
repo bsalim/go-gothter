@@ -16,14 +16,14 @@ func NewNotifier(cfg *config.Config, logger *logrus.Logger) *Notifier {
 	return &Notifier{cfg: cfg, logger: logger}
 }
 
-func (n *Notifier) SendNotification() {
+func (n *Notifier) SendNotification(ip string) {
 	if n.cfg.Email.Enabled {
 		// Create a new message
 		m := gomail.NewMessage()
 		m.SetHeader("From", n.cfg.Email.SMTPUser)
 		m.SetHeader("To", n.cfg.Email.Recipient)
 		m.SetHeader("Subject", n.cfg.Email.Subject)
-		m.SetBody("text/plain", "Suspicious activity detected!")
+		m.SetBody("text/plain", "Suspicious activity detected from IP: "+ip)
 
 		// Create a new dialer
 		d := gomail.NewDialer(n.cfg.Email.SMTPServer, n.cfg.Email.SMTPPort, n.cfg.Email.SMTPUser, n.cfg.Email.SMTPPassword)
@@ -32,7 +32,7 @@ func (n *Notifier) SendNotification() {
 		if err := d.DialAndSend(m); err != nil {
 			n.logger.Errorf("Failed to send email: %v", err)
 		} else {
-			n.logger.Info("Email sent successfully!")
+			n.logger.Infof("Email sent successfully for IP: %s", ip)
 		}
 	}
 }
