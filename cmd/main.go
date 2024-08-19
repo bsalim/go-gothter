@@ -25,7 +25,7 @@ func main() {
 	blockDuration := time.Duration(cfg.BlockDuration.Hours) * time.Hour
 
 	// Create or open the log file
-	logFile, err := os.OpenFile(cfg.LogFiles.AuthLog, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
+	logFile, err := os.OpenFile(cfg.LogFiles.LogFile, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
 	if err != nil {
 		logrus.Fatalf("Error opening log file: %v", err)
 	}
